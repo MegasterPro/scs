@@ -122,13 +122,16 @@ export default function App() {
 
   return (
     <ConfigContext.Provider value={{ config, setConfig }}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/brightcoders" element={<AdminRoute />} />
-          <Route path="*" element={<Landing />} />
-        </Routes>
-      </Router>
+      <Router basename="/scs">
+         <Routes>
+           <Route path="/" element={<Landing />} />
+
+           <Route path="brightcoders" element={<AdminRoute />} />
+
+            <Route path="*" element={<Landing />} />
+         </Routes>
+       </Router>
     </ConfigContext.Provider>
+
   );
 }
