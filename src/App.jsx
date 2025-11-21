@@ -125,9 +125,7 @@ export default function App() {
       <Router basename="/scs">
          <Routes>
            <Route path="/" element={<Landing />} />
-
            <Route path="brightcoders" element={<AdminRoute />} />
-
             <Route path="*" element={<Landing />} />
          </Routes>
        </Router>
