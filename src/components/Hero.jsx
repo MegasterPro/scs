@@ -1,6 +1,7 @@
 import React from 'react';
+import AdminRoute from './AdminRoute';
 
-export default function Hero({ cfg }) {
+export default function Hero({ cfg = {} }) {
   return (
     <section className="pt-16 pb-12 text-center">
       <div className="max-w-4xl mx-auto">

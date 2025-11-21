@@ -43,7 +43,25 @@ export default function AdminRoute() {
   const { config, setConfig } = useContext(ConfigContext);
   const [local, setLocal] = useState(config);
 
-  useEffect(() => setLocal(config), [config]);
+  useEffect(() => {
+    const cleanConfig = {
+      ...DefaultConfig,
+      ...config,
+      hero: { ...DefaultConfig.hero, ...config?.hero },
+      impact: { ...DefaultConfig.impact, ...config?.impact },
+      meta: { ...DefaultConfig.meta, ...config?.meta },
+      international: { ...DefaultConfig.international, ...config?.international },
+      footer: { 
+        ...DefaultConfig.footer, 
+        ...config?.footer,
+        socials: { ...DefaultConfig.footer.socials, ...config?.footer?.socials }
+      },
+      features: config?.features || DefaultConfig.features,
+      videos: config?.videos || DefaultConfig.videos,
+      testimonials: config?.testimonials || DefaultConfig.testimonials,
+    };
+    setLocal(cleanConfig);
+  }, [config]);
 
   function loginDemo() {
     const pwd = prompt('Mot de passe admin (demo)');

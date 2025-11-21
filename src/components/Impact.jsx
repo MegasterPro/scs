@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ImpactCard({ value, text, icon }) {
+function ImpactCard({ value, text }) {
   return (
     <div className="p-6 rounded-2xl bg-gradient-to-br from-cyan-500/10 via-violet-500/10 to-transparent border border-white/10 hover:border-cyan-400/50 transition">
       <div className="text-4xl font-extrabold bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">{value}</div>
@@ -9,7 +9,7 @@ function ImpactCard({ value, text, icon }) {
   );
 }
 
-export default function Impact({ impact, meta }) {
+export default function Impact({ impact = {}, meta = {} }) {
   return (
     <section id="impact" className="mt-16 py-12 bg-gradient-to-br from-white/3 via-white/1 to-transparent rounded-2xl px-6 border border-white/5">
       <div className="max-w-5xl mx-auto">
