@@ -1,32 +1,13 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title>Redirecting...</title>
-    <script>
-      // Restore the intended URL after redirect
-      const redirect = sessionStorage.redirect;
-      delete sessionStorage.redirect;
-      if (redirect && redirect !== location.href) {
-        history.replaceState(null, null, redirect);
-      }
-    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>scs</title>
   </head>
   <body>
-    <script>
-      (function () {
-        // SPA base
-        const spaBase = '/scs/';
-        // full original request (pathname + query + hash)
-        const original = location.pathname + location.search + location.hash;
-        // if already inside SPA, avoid loop
-        if (location.pathname === spaBase || location.pathname.startsWith(spaBase)) {
-          return;
-        }
-        // redirect to SPA with original path in the hash so the SPA router can restore it
-        const target = spaBase + '#' + original;
-        window.location.replace(target);
-      })();
-    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
