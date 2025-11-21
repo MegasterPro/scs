@@ -14,9 +14,19 @@
   </head>
   <body>
     <script>
-      // Store the current path then redirect to the SPA entrypoint
-      sessionStorage.redirect = location.href;
-      window.location.replace("/scs/");
+      (function () {
+        // SPA base
+        const spaBase = '/scs/';
+        // full original request (pathname + query + hash)
+        const original = location.pathname + location.search + location.hash;
+        // if already inside SPA, avoid loop
+        if (location.pathname === spaBase || location.pathname.startsWith(spaBase)) {
+          return;
+        }
+        // redirect to SPA with original path in the hash so the SPA router can restore it
+        const target = spaBase + '#' + original;
+        window.location.replace(target);
+      })();
     </script>
   </body>
 </html>
