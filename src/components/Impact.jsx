@@ -15,7 +15,7 @@ export default function Impact({ impact, meta }) {
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">Impact national</h2>
-          <p className="mt-2 opacity-80">Résultats mesurables et bénéfices concrets</p>
+          <p className="mt-2 opacity-80"> Résultats mesurables et bénéfices concrets</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <ImpactCard value={`${impact.surchargeReduction}%`} text="Réduction de la surcharge hospitalière" />
