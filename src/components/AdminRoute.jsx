@@ -37,29 +37,47 @@ const DefaultConfig = {
   meta: { partnersCount: 12, officialLink: 'https://santeconnectee.sn' }
 };
 
+// Add a small helper to normalize incoming config shapes
+function normalizeConfig(cfg = {}) {
+  const safe = { ...DefaultConfig, ...cfg };
+
+  // shallow merge complex nested sections
+  safe.hero = { ...DefaultConfig.hero, ...cfg.hero };
+  safe.impact = { ...DefaultConfig.impact, ...cfg.impact };
+  safe.meta = { ...DefaultConfig.meta, ...cfg.meta };
+  safe.footer = {
+    ...DefaultConfig.footer,
+    ...cfg.footer,
+    socials: { ...DefaultConfig.footer.socials, ...cfg.footer?.socials },
+  };
+
+  // normalize arrays (accept arrays or objects -> Object.values)
+  const toArray = v => (Array.isArray(v) ? v : (v && typeof v === 'object' ? Object.values(v) : null));
+
+  safe.features = toArray(cfg.features) ?? DefaultConfig.features;
+  safe.videos = toArray(cfg.videos) ?? DefaultConfig.videos;
+  safe.testimonials = toArray(cfg.testimonials) ?? DefaultConfig.testimonials;
+
+  const partnersArr = toArray(cfg.international?.partners);
+  safe.international = {
+    ...DefaultConfig.international,
+    ...cfg.international,
+    partners: partnersArr ?? DefaultConfig.international.partners,
+  };
+
+  return safe;
+}
+
 export default function AdminRoute() {
   const navigate = useNavigate();
   const [authed, setAuthed] = useState(!!sessionStorage.getItem('sc_admin'));
   const { config, setConfig } = useContext(ConfigContext);
-  const [local, setLocal] = useState(config);
+  // Initialize local with normalized config to avoid .map on non-arrays
+  const [local, setLocal] = useState(() => normalizeConfig(config));
 
   useEffect(() => {
-    const cleanConfig = {
-      ...DefaultConfig,
-      ...config,
-      hero: { ...DefaultConfig.hero, ...config?.hero },
-      impact: { ...DefaultConfig.impact, ...config?.impact },
-      meta: { ...DefaultConfig.meta, ...config?.meta },
-      international: { ...DefaultConfig.international, ...config?.international },
-      footer: { 
-        ...DefaultConfig.footer, 
-        ...config?.footer,
-        socials: { ...DefaultConfig.footer.socials, ...config?.footer?.socials }
-      },
-      features: config?.features || DefaultConfig.features,
-      videos: config?.videos || DefaultConfig.videos,
-      testimonials: config?.testimonials || DefaultConfig.testimonials,
-    };
+    // ...existing code...
+    const cleanConfig = normalizeConfig(config);
     setLocal(cleanConfig);
   }, [config]);
 
